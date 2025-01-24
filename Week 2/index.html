@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <button id="go_red_button">Go Red</button>
+    <button id="go_green_button">Go Green</button>
+
+    <script>
+        
+        const makePerson = (first_name, last_name, age) => {
+            return {
+                name: first_name + " " + last_name,
+                age
+            }
+        }
+        
+        const me = makePerson('travis', 'stodter', 35);
+        console.log(me);
+        
+        /* const goRedButton = document.querySelector("#go_red_button");
+        const goGreenButton = document.querySelector("#go_green_button");
+        
+        const setBackgroundColor = (element, color) => {
+            return (e) => {
+                element.querySelector("body").style.backgroundColor = color;
+            }
+        };
+
+        goRedButton.addEventListener("click", setBackgroundColor(goRedButton, 'red'));
+
+        goGreenButton.addEventListener("click", setBackgroundColor(goGreenButton, 'green')); */
+
+        
+
+        /* function setBackgroundColor(color) {
+            document.querySelector("body").style.backgroundColor = color;
+        } */
+
+
+        /* const print = (n) => {
+            const print1 = (a) => 
+            a <= 0 
+                ? '1' 
+                : '1' + print2(a - 1);
+            const print2 = (b) => b <= 0 ? '2' : '2' + print1(b - 1);
+        }
+
+        const tree = {
+            value: 1,
+            left: {
+                value: 2,
+                left: {
+                    value:4,
+                },
+                right: null,
+            },
+            right: null,
+        }
+
+        const getLeft = (tree) => {
+            if (tree.left === null) {
+                return tree.value;
+            }
+            return getLeft(tree.left);
+        } */
+
+
+
+
+        // More Function practice
+        /* const init = () => {
+            const goRedButton = document.querySelector('go_red_button');
+
+            handler();
+
+            const handler = () => {
+                const body = document.querySelector("body");
+                body.style.backgroundColor = "red";
+            }
+
+            goRedButton.addEventListener("click", handler);
+        };
+
+        init(); */
+        
+
+
+
+
+        /* // Function practice
+        const add1 = (n) => n + 1;
+        const numToString = (n) => `${n}`;
+        const stringToNum = (s) => +s;
+        // Bad ways to turn nums to strings and vice versa^ don't do those!
+
+        const addThenStringify = (n) => numToString(add1(n)); */
+    </script>
+</body>
+</html>

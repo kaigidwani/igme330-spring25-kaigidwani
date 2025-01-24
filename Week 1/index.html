@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .awful_red_thing{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    
+     <button id="the_button">Don't click me</button>
+     <input id="first_name_text_box" placeholder="Your first name">
+     <input id="last_name_text_box" placeholder="Your last name">
+     <p id="output_p">Not the output</p>
+
+     <script>
+        // When the button is clicked, say hello to
+        // whoever's name is in the input (with the
+        // p tag)
+
+
+        // Both of these do the same thing but we
+        // prefer querySelector over getElementById
+        // because it works with CSS selectors too
+
+        //const theButton = document.getElementById('the_button');
+        const theButton = document.querySelector('#the_button');
+        const firstNameTextBox = document.querySelector('#first_name_text_box');
+        const lastNameTextBox = document.querySelector('#last_name_text_box');
+        const outputP = document.querySelector('#output_p');
+
+
+        // Set up an event listener for the button
+
+        // We prefer addEventListener because it is
+        // more flexible and can help with bugs!
+        // It lets you put multiple events for one thing
+
+        //theButton.onclick = () => {
+        //    console.log('clicked');
+        //}
+        theButton.addEventListener('click', () => {
+            console.log('clicked');
+            // that should change p tag's html
+
+            let firstName = firstNameTextBox.value;
+
+            let lastName = lastNameTextBox.value;
+
+
+            if (!firstName && !lastName) {
+                outputP.innerHTML = 'default';
+            } else{
+                //outputP.innerHTML = 'hello ' + name;
+                outputP.innerHTML = `hello ${firstName} ${lastName}`;
+            }
+
+            document.querySelector('body').className = 'awful_red_thing';
+        })
+
+
+        
+        
+
+     </script>
+</body>
+</html>
