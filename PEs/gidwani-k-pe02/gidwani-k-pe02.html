@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Delius&display=swap" rel="stylesheet">
+
+    <style>
+        .red_mode{
+            background-color: red;
+        }
+
+        #hello_button, #goodbye_button{
+            width: 150pt;
+            height: 50pt;
+            font-size: 14pt;
+            font-family: "Delius", serif;
+        }
+        
+
+        @media only screen and (min-width: 240px){
+            body{
+                background-color: red;
+                padding: 100px;
+            }
+        }
+
+        .delius-regular {
+            font-family: "Delius", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        p {
+            font-family: "Delius", serif;
+        }
+
+        input {
+            font-family: "Delius", serif;
+        }
+    </style>
+
+<script>
+    window.onload = function() {
+        // When the button is clicked, say hello to
+        // whoever's name is in the input (with the
+        // p tag)
+
+
+        // Both of these do the same thing but we
+        // prefer querySelector over getElementById
+        // because it works with CSS selectors too
+
+        //const theButton = document.getElementById('the_button');
+        const hello_button = document.querySelector('#hello_button');
+        const goodbye_button = document.querySelector('#goodbye_button');
+        const shoutify_checkbox = document.querySelector('#shoutify_checkbox');
+        const first_name_text_box = document.querySelector('#first_name_text_box');
+        const last_name_text_box = document.querySelector('#last_name_text_box');
+        const output_p = document.querySelector('#output_p');
+
+
+        // Set up an event listener for the button
+
+        // We prefer addEventListener because it is
+        // more flexible and can help with bugs!
+        // It lets you put multiple events for one thing
+
+        //theButton.onclick = () => {
+        //    console.log('clicked');
+        //}
+        hello_button.addEventListener('click', () => {
+            console.log('clicked');
+            
+            greet("Hello");
+        })
+
+        goodbye_button.addEventListener('click', () => {
+            console.log('clicked');
+            
+            greet("Goodbye");
+        })
+
+        const greet = (greeting) => {
+            // Get first and last names
+            let firstName = first_name_text_box.value.trim();
+
+            let lastName = last_name_text_box.value.trim();
+
+            // If there is no firstname given, assign Peter
+            if (!firstName) {
+                firstName = "Peter";
+            }
+
+            // If there is no lastname given, assign Parker
+            if (!lastName) {
+                lastName = "Parker";
+            }
+
+            // Save the greeting
+            let printMessage = `${greeting} ${firstName} ${lastName}`;
+
+            
+            // Check if shoutify is checked or not
+            // and capitalize printMessage if so
+            if (shoutify_checkbox.checked) {
+                // Make the message uppercase
+                printMessage = printMessage.toUpperCase();
+            }
+
+            // Print the message
+            output_p.innerHTML = printMessage;
+
+            // Set the document to the red mode
+            document.querySelector('body').className = 'red_mode';
+        }
+
+        // Change the paragraph's style to red text on a yellow background
+        output_p.style.color = "red";
+        output_p.style.backgroundColor = "yellow";
+    }
+    
+
+ </script>
+</head>
+<body>
+    
+     <button id="hello_button">Say Hello</button>
+     <button id="goodbye_button">Say Goodbye</button>
+     <input type="checkbox" id="shoutify_checkbox">Shoutify!</input>
+     <hr>
+     <input id="first_name_text_box" placeholder="Your first name">
+     <input id="last_name_text_box" placeholder="Your last name">
+     <p id="output_p">Output</p>
+
+     
+</body>
+</html>
