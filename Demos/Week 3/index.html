@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Cat Breeds</h2>
+
+    <ul>
+        <li>
+            <p>Tuxedo</p>
+            <p><strong>Silly:</strong> goober</p>
+            <p><strong>Fanciness:</strong> off the charts</p>
+        </li>
+        <li>
+            <p>Persian</p>
+            <p><strong>Silly:</strong> oh you know it</p>
+            <p><strong>Fanciness:</strong> no not really</p>
+        </li>
+        <li>
+            <p>Lynx</p>
+            <p><strong>Silly:</strong> oh for sure</p>
+            <p><strong>Fanciness:</strong> sure? maybe?</p>
+        </li>
+    </ul>
+
+    <script>
+
+        // Templated Strings
+
+        /* const first = 'travis';
+        const last = "stodter";
+
+        // const full_name = `${first} ${last}`;
+        const full_name = fist + ' ' + last;
+
+        console.log(full_name);
+
+        const greeting = `Hello there, ${first + ' ' + last}`;
+
+        console.log(greeting); */
+
+        const breeds = [
+            {
+                name: "Tuxedo",
+                silly: "goober",
+                fanciness: "off the charts"
+            },
+            {
+                name: "Persian",
+                silly: "oh you know it",
+                fanciness: "no not really"
+            },
+            {
+                name: "Lynx",
+                silly: "oh for sure",
+                fanciness: "sure? maybe?"
+            }
+        ];
+
+        const list_item = (cat_breeds) => {
+            const {name, silly, fanciness} = cat_breeds;
+
+            return `
+            <li>
+                <p>${name}</p>
+                <p><strong>Silly:</strong> ${silly}</p>
+                <p><strong>Fanciness:</strong> ${fanciness}</p>
+            </li>
+            `; // Dont forget the closing mark for the string
+        }
+
+        const list = (cat_breeds) => {
+            let html = '';
+            for (let i = 0; i < cat_breeds; i++){
+                html += list_item(cat_breeds[i]);
+                html += '\n';
+            }
+
+            return `
+                <li>
+                    ${cat_breeds
+                        .map(event => list_item(event))
+                        .join('\n')
+                    }
+                </li>
+            `;
+        }
+
+        console.log(list(events));
+    </script>
+</body>
+</html>
