@@ -27,6 +27,10 @@
     </ul>
 
     <script>
+        
+
+
+
 
         // Templated Strings
 
@@ -60,7 +64,10 @@
             }
         ];
 
-        const list_item = (cat_breeds) => {
+        // Alternate way to do it without a variable for cat_breed
+        // const cat_breeds_to_html = ({name, silly, fanciness}) => {}
+
+        const cat_breed_to_html = (cat_breeds) => {
             const {name, silly, fanciness} = cat_breeds;
 
             return `
@@ -72,24 +79,54 @@
             `; // Dont forget the closing mark for the string
         }
 
-        const list = (cat_breeds) => {
-            let html = '';
-            for (let i = 0; i < cat_breeds; i++){
-                html += list_item(cat_breeds[i]);
-                html += '\n';
-            }
 
-            return `
-                <li>
-                    ${cat_breeds
-                        .map(event => list_item(event))
-                        .join('\n')
-                    }
-                </li>
+        // Day 1 version of turning list to html:
+
+        // const list = (cat_breeds) => {
+        //     let html = '';
+        //     for (let i = 0; i < cat_breeds; i++){
+        //         html += cat_breed_to_html(cat_breeds[i]);
+        //         html += '\n';
+        //     }
+
+        //     return `
+        //         <li>
+        //             ${cat_breeds
+        //                 .map(cat_breed => cat_breed_to_html(cat_breed))
+        //                 .join('\n')
+        //             }
+        //         </li>
+        //     `;
+        // }
+
+
+        // Day 2 version of turning list to html
+
+        const all_cat_breeds_to_html = (cat_breeds) => {
+            // List of all cats to become html
+
+            const html_items = cat_breeds.map(cat_breed => {
+                return cat_breed_to_html(cat_breed);
+            });
+
+
+            // By default js turns the array into a string including commas
+            // which would break the html. Using .join removes the commas
+            // and we replace them with newlines
+            const list_html = `
+                <ul>
+                    ${html_items.join('\n')}
+                </ul>
             `;
+
+            return list_html;
         }
 
-        console.log(list(events));
+        const list_html = all_cat_breeds_to_html(breeds);
+
+        console.log(list_html);
+
+        // need to turn variable into html, not sure how
     </script>
 </body>
 </html>
