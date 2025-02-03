@@ -90,9 +90,10 @@ import {breeds} from './data.js';
                     const somethignUseful = result.json();
                     return response.json();
                 });
-                .then(result => {
+               /* not sure why this is erroring
+                 .then(result => {
                     debugger;
-                });
+                }); */
 
             return something;
         }

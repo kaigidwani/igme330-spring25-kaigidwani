@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="the_canvas" width="800" height = "800"></canvas>
+
+    <script>
+        const canvas = document.querySelector('#the_canvas');
+        const ctx = canvas.getContext('2d');
+
+        ctx.strokeStyle = 'black';
+        const borderWidth = 10;
+        ctx.lineWidth = 10;
+        ctx.strokeRect(borderWidth / 2, borderWidth / 2,
+                         800 - borderWidth, 800 - borderWidth);
+        
+        /* ctx.fillStyle = 'red';
+        ctx.fillRect(0, 0, 500, 500);
+
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 50;
+        ctx.strokeRect(25, 25, 500, 500); */
+
+        // Save current styles so that they arent overwritten by what
+        // we do in the path
+        ctx.save();
+
+        ctx.beginPath();
+
+        ctx.arc(100, 100, 50, 0, Math.PI / 2, true);
+        //ctx.moveTo(0, 0);
+        ctx.lineTo(100, 100)
+
+        ctx.strokeStyle = 'green';
+        ctx.lineWidth = 5;
+
+        ctx.stroke();
+        ctx.strokeStyle = 'pink';
+        ctx.lineWidth = 1;
+
+        ctx.stroke();
+        ctx.closePath();
+
+        // Restore our previous style that we had before the path
+        ctx.restore();
+
+        ctx.strokeRect(borderWidth / 2, borderWidth / 2,
+                         800 - borderWidth, 800 - borderWidth);
+    </script>
+</body>
+</html>
