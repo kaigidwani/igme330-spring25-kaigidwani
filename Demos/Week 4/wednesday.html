@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="the_canvas" width="800" height="800"></canvas>
+
+    <script>
+        const canvas = document.querySelector("#the_canvas");
+        const ctx = canvas.getContext('2d');
+
+        ctx.strokeStyle = 'black';
+        ctx.strokeRect(20, 20, 400, 400);
+
+        // Generate an array of a bunch of random numbers
+        const makeRandomArray = (length) => {
+            let numbers = [];
+
+            for (let i = 0; i < length; i++) {
+                numbers.push(Math.random());
+            }
+
+            return numbers;
+        }
+
+
+        const positions = makeRandomArray(100);
+        // const red_data = makeRandomArray(10);
+        // const green_data = makeRandomArray(10);
+
+        const zeros = Array.from({length: 10}, (_, i) => 0);
+        const red_data = zeros;
+        const green_data = zeros; 
+        const blue_data = makeRandomArray(10);
+
+
+        // Then, with that array, draw rects
+        for (let i = 0; i < 10; i++) {
+            const num = positions[i] * 400;
+
+            const r = Math.floor(red_data[i] * 256);
+            const g = Math.floor(green_data[i] * 256);
+            const b = Math.floor(blue_data[i] * 256);
+
+            const color = `rgb(${r},${g},${b})`;
+
+            ctx.fillStyle = color;
+
+            debugger;
+
+            ctx.fillRect(20 + num, 20 + num,
+                        10, 10);
+        }
+
+    </script>
+</body>
+</html>
