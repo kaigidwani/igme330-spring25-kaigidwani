@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="800" height="900"></canvas>
+
+    <script>
+        const canvas = document.querySelector("#myCanvas");
+        const ctx = canvas.getContext('2d');
+
+        let mousePosition = [0, 0];
+        canvas.addEventListener('mousemove', (e) => {
+            //console.log(e.clientX, e.clientY);
+            const rect = canvas.getBoundingClientRect();
+            
+            const adjustedX = e.clientX - rect.X;
+            const adjustedY = e.clientY - rect.y;
+            
+            mousePosition[0] = adjustedX;
+            mousePosition[1] = adjustedY;
+        })
+
+        const rotationPerSecond = Math.PI;
+
+        let lastUpdateT = true;
+        const animate = (t) => {
+            const frameDuration = t - lastUpdateT;
+            const fps = Math.round(1000 / frameDuration);
+            lastUpdateT = t;
+            //console.log(fps);
+
+            ctx.clearRect(0, 0, 800, 800);
+
+            const rotation = rotationPerSecond / fps;
+
+            ctx.fillStyle = 'rebeccapurple';
+            ctx.translate(200, 200);
+            ctx.rotate(rotation);
+            ctx.translate(-200, -200);
+
+            ctx.fillRect(mousePosition[0], mousePosition[1],
+                        200, 200);
+
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
