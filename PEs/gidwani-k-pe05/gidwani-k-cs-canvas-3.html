@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        canvas{
+            border:1px solid gray;
+        }
+    </style>
+    <script>
+        'use strict';
+
+        //call the init function after the page loads
+        window.onload = init;
+
+        function init(){
+            console.log("page loaded!");
+
+            //draw after the page has loaded
+            let canvas = document.querySelector('canvas');
+
+            let ctx = canvas.getContext('2d');
+
+            //all fill operations are in red
+            ctx.fillStyle = 'red';
+
+            ctx.fillRect(20,20,600,440);
+
+            //rect
+            ctx.fillStyle = 'yellow';
+            ctx.strokeStyle = 'magenta';
+            ctx.lineWidth = 10;
+            ctx.beginPath();
+            ctx.rect(120,120,400,300);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            //lines
+            ctx.beginPath();
+            ctx.moveTo(20,20);
+            ctx.lineTo(620,460);
+            ctx.closePath();
+            ctx.lineWidth = 5;
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(620,20);
+            ctx.lineTo(20,460);
+            ctx.closePath();
+            ctx.stroke();
+
+            //circle
+            ctx.fillStyle = 'green';
+            ctx.strokeStyle = 'purple';
+            ctx.beginPath();
+            ctx.arc(320,240,50,0, Math.PI, false);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            //small circle
+            ctx.fillStyle = 'gray';
+            ctx.strokeStyle = 'yellow';
+            ctx.beginPath();
+            ctx.arc(320,240,20,0, Math.PI, false);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+        }
+        
+        // handy helper functions!
+        function getRandomColor(){
+        function getByte(){
+            return 55 + Math.round(Math.random() * 200);
+        }
+        return "rgba(" + getByte() + "," + getByte() + "," + getByte() + ",.8)";
+        }
+
+        function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+    </script>
+</head>
+<body>
+    <canvas width="640" height="480";>
+        Get a real browser!
+    </canvas>
+</body>
+</html>
