@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+    
+    <canvas width="800" height="800"></canvas>
+
+    <script>
+        const canvas = document.querySelector('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let shapes = [];
+
+        const drawShape = (ctx, x, y) => {
+            // points up, down left, down right
+            const upPoint = [x, y - 20];
+            const downLeftPoint = [x- 10, y + 10];
+            const downRightPoint = [x + 10, y + 10];
+
+            ctx.save();
+                ctx.beginPath();
+                //ctx.moveTo(upPoint[0], upPoint[1]);
+                ctx.moveTo(... upPoint); // Same way of doing the thing above. Dumps all objects of an array as parameters.
+                ctx.lineTo(...downRightPoint);
+                ctx.lineTo(...downLeftPoint);
+                ctx.closePath();
+
+                ctx.fillStyle = 'teal';
+                ctx.fill();
+            ctx.restore();
+        }
+
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            
+            const clickX = e.clientX - rect.x;
+            const clickY = e.clientY - rect.y;
+
+            // draw shape
+            const newShape = {
+                position: [clickX, clickY],
+                size: 1
+            };
+            shapes.push(newShape);
+            console.log(shapes);
+        });
+
+        let trianglePosition = [100,100];
+        let lastUpdateT = 0;
+        const animate = (t) => {
+            const frameDuration = t - lastUpdateT;
+            const fps = Math.round(1000 / frameDuration);
+            lastUpdateT = t;
+
+            for (let i = 0; i < shapes.length; i++) {
+                const shape = shapes[i];
+
+                shape.size = shape.size * 1.1;
+            }
+
+            ctx.clearRect(0, 0, 800, 800);
+
+            ctx.save();
+                
+            for (let i = 0; i < shapes.length; i++)
+            {
+                const shape = shapes[i];
+                const position = shape.position;
+                const size = shape.size;
+
+                ctx.save();
+                    ctx.translate(-position[0], -position[1]);
+                    ctx.scale(size, size);
+                    ctx.translate(position[0], position[1]);
+                    drawShape(ctx, position[0], position[1]);
+                ctx.restore();
+            }
+
+            ctx.restore();
+
+            requestAnimationFrame(animate);
+        }
+        animate(0);
+
+    </script>
+</body>
+</html>

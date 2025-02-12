@@ -4,54 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
 </head>
 <body>
-    <canvas id="myCanvas" width="800" height="900"></canvas>
+    
+    <canvas width="800" height="800"></canvas>
 
     <script>
-        const canvas = document.querySelector("#myCanvas");
+        const canvas = document.querySelector('canvas');
         const ctx = canvas.getContext('2d');
-
+               
         let mousePosition = [0, 0];
-        canvas.addEventListener("mousemove", (e) => {
-            //console.log(e.clientX, e.clientY);
+        canvas.addEventListener('mousemove', (e) => {
             const rect = canvas.getBoundingClientRect();
             
-            const adjustedX = e.clientX - rect.X;
+            const adjustedX = e.clientX - rect.x;
             const adjustedY = e.clientY - rect.y;
             
             mousePosition[0] = adjustedX;
             mousePosition[1] = adjustedY;
-        })
+        });
 
         const rotationPerSecond = Math.PI;
 
         let rotation = 0;
-        let lastUpdateT = true;
+        let lastUpdateT = 0;
         const animate = (t) => {
             const frameDuration = t - lastUpdateT;
             const fps = Math.round(1000 / frameDuration);
             lastUpdateT = t;
-            //console.log(fps);
 
             ctx.clearRect(0, 0, 800, 800);
 
-            const rotation = rotationPerSecond / fps;
+            rotation += rotationPerSecond / fps;
 
-            //ctx.save();
-                ctx.fillStyle = 'rebeccapurple';
-
+            ctx.fillStyle = 'rebeccapurple';
+            ctx.save();
                 ctx.translate(mousePosition[0], mousePosition[1]);
                 ctx.rotate(rotation);
                 ctx.translate(-mousePosition[0], -mousePosition[1]);
 
                 ctx.fillRect(mousePosition[0] - 100, mousePosition[1] - 100,
                             200, 200);
-            //ctx.restore();
+            ctx.restore();
 
             requestAnimationFrame(animate);
         }
-        animate();
+        animate(0);
+
     </script>
 </body>
 </html>
