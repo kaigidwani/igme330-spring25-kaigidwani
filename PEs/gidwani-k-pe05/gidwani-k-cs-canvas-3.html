@@ -15,13 +15,15 @@
         //call the init function after the page loads
         window.onload = init;
 
+        let ctx;
+
         function init(){
             console.log("page loaded!");
 
             //draw after the page has loaded
             let canvas = document.querySelector('canvas');
 
-            let ctx = canvas.getContext('2d');
+            ctx = canvas.getContext('2d');
 
             //all fill operations are in red
             ctx.fillStyle = 'red';
@@ -69,8 +71,38 @@
             ctx.closePath();
             ctx.fill();
             ctx.stroke();
+
+            update();
+        }
+
+        function update() {
+            requestAnimationFrame(update);
+            drawRandomRect(ctx);
+            drawRandomSphere(ctx);
         }
         
+        function drawRandomRect(ctx) {
+            ctx.fillStyle = getRandomColor();
+            ctx.strokeStyle = getRandomColor();
+            ctx.lineWidth = getRandomInt(2, 12);
+            ctx.beginPath();
+            ctx.rect(getRandomInt(0, 640),getRandomInt(0, 480),getRandomInt(10, 90),getRandomInt(10, 90));
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+        }
+
+        function drawRandomSphere(ctx) {
+            ctx.fillStyle = getRandomColor();
+            ctx.strokeStyle = getRandomColor();
+            ctx.lineWidth = getRandomInt(2, 12);
+            ctx.beginPath();
+            ctx.arc(getRandomInt(0, 640),getRandomInt(0, 480),getRandomInt(10, 45),0,2*Math.PI);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+        }
+
         // handy helper functions!
         function getRandomColor(){
         function getByte(){
