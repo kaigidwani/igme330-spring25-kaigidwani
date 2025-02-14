@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas width="800" height="800"></canvas>
+
+    <script>
+        const canvas = document.querySelector('canvas');
+        const ctx = canvas.getContext('2d');
+
+        let mousePosition = [0, 0];
+        let pathPoints = [];
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            
+            const adjustedX = e.clientX - rect.x;
+            const adjustedY = e.clientY - rect.y;
+            
+            mousePosition[0] = adjustedX;
+            mousePosition[1] = adjustedY;
+
+            pathPoints.push([...mousePosition]);
+        });
+
+        const drawPath = (ctx, points, shouldFill = true) => {
+            ctx.fillStyle = 'teal';
+            ctx.strokeStyle = 'orange';
+
+            if (points.length < 2) {
+                return;
+            }
+
+            ctx.beginPath();
+            
+            //debugger;
+            // points = [[100, 100], [200, 200], ...]
+            const firstPoint = points[0];
+            ctx.moveTo(...firstPoint);
+            for (let i = 0; i < points.length; i++) {
+                const thisPoint = points[i]
+                ctx.lineTo(...thisPoint);
+            }
+
+            if (shouldFill) {
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            ctx.stroke();
+        }
+
+        const drawPolygon = (ctx, points) => {
+            drawPath(ctx, points, true);
+        }
+
+        const drawTriangle = (ctx, p1, p2, p3) => {
+            drawPath(ctx, p1, p2, p3);
+        }
+        
+        const drawQuad = (ctx, p1, p2, p3, p4) => {
+            drawPath(ctx, p1, p2, p3, p4);
+        }
+
+        let lastUpdateT = 0;
+        const animate = (t) => {
+            const frameDuration = t - lastUpdateT;
+            const fps = Math.round(1000 / frameDuration);
+            lastUpdateT = t;
+
+            ctx.clearRect(0, 0, 800, 800);
+
+            ctx.save();
+
+            drawPolygon(ctx, [[100, 100], [150, 200], [50, 200]]);
+
+            drawPath(ctx, pathPoints);
+                
+            ctx.restore();
+
+            //requestAnimationFrame(animate);
+        };
+        animate(0);
+    </script>
+</body>
+</html>
