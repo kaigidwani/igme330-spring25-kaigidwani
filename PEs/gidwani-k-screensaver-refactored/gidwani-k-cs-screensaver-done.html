@@ -35,7 +35,7 @@
         let createArcs = true;
         let createLines = true;
 
-        function init(){
+        let init = () => {
             console.log("page loaded!");
 
             //draw after the page has loaded
@@ -65,30 +65,30 @@
             setupUI();
 
             update();
-        }
+        };
 
-        function update() {
+        let update = () => {
             if(paused) return;
             if (!paused) requestAnimationFrame(update);
             if (createRectangles) drawRandomRect(ctx);
             if (createArcs) drawRandomArc(ctx);
             if (createLines) drawRandomLine(ctx);
-        }
+        };
         
-        function drawRandomRect(ctx) {
+        let drawRandomRect = (ctx) => {
             drawRectangle(ctx,getRandomInt(0, 640),getRandomInt(0, 480),getRandomInt(10, 90),getRandomInt(10, 90),getRandomColor(),getRandomInt(2, 12),getRandomColor());
-        }
+        };
 
-        function drawRandomArc(ctx) {
+        let drawRandomArc = (ctx) => {
             drawArc(ctx,getRandomInt(0, 640),getRandomInt(0, 480),getRandomInt(10, 45),getRandomColor(),getRandomInt(2, 12),getRandomColor(),0,Math.PI*2);
-        }
+        };
 
-        function drawRandomLine(ctx) {
+        let drawRandomLine = (ctx) => {
             drawLine(ctx,getRandomInt(0, 640),getRandomInt(0, 480),getRandomInt(0, 640),getRandomInt(0, 480),getRandomInt(2, 12),getRandomColor());
-        }
+        };
 
         // event handlers
-        function canvasClicked(e){
+        let canvasClicked = (e) => {
             let rect = e.target.getBoundingClientRect();
             let mouseX = e.clientX - rect.x;
             let mouseY = e.clientY - rect.y;
@@ -101,10 +101,10 @@
                 drawArc(ctx,x,y,radius,color);
             }
 
-        }
+        };
 
         // canvas helpers
-        function drawRectangle(ctx,x,y,width,height,fillStyle="black",lineWidth=0,strokeStyle="black") {
+        let drawRectangle = (ctx,x,y,width,height,fillStyle="black",lineWidth=0,strokeStyle="black") => {
             ctx.save();
                 ctx.fillStyle = fillStyle;
                 ctx.beginPath();
@@ -117,9 +117,9 @@
                 }
                 ctx.closePath();
             ctx.restore();
-        }
+        };
 
-        function drawArc(ctx,x,y,radius,fillStyle="black",lineWidth=0,strokeStyle="black",startAngle=0,endAngle=Math.PI*2){
+        let drawArc = (ctx,x,y,radius,fillStyle="black",lineWidth=0,strokeStyle="black",startAngle=0,endAngle=Math.PI*2) => {
             ctx.save();
                 ctx.fillStyle = fillStyle;
                 ctx.beginPath();
@@ -132,9 +132,9 @@
                 }
                 ctx.closePath();
             ctx.restore();
-        }
+        };
 
-        function drawLine(ctx,x1,y1,x2,y2,lineWidth=1,strokeStyle="black") {
+        let drawLine = (ctx,x1,y1,x2,y2,lineWidth=1,strokeStyle="black") => {
             ctx.save();
                 ctx.beginPath();
                 ctx.moveTo(x1,y1)
@@ -145,16 +145,16 @@
                 ctx.stroke();
                 ctx.closePath();
             ctx.restore();
-        }
+        };
 
         // helpers
-        function setupUI() {
-            document.querySelector("#btnPause").onclick = function() {
+        let setupUI = () => {
+            document.querySelector("#btn-pause").onclick = function() {
                 paused = true;
                 clicked = true;
             };
 
-            document.querySelector("#btnPlay").onclick = function() {
+            document.querySelector("#btn-play").onclick = function() {
                 paused = false;
                 if (clicked) {
                     clicked = false;
@@ -162,36 +162,36 @@
                 }
             };
 
-            document.querySelector("#btnClearScreen").onclick = function() {
+            document.querySelector("#btn-clear-screen").onclick = function() {
                 ctx.clearRect(0, 0, 640, 680);
             };
 
             canvas.onclick = canvasClicked;
 
-            document.querySelector("#cbRectangles").onclick = function(e){
+            document.querySelector("#cb-rectangles").onclick = function(e){
                 createRectangles = e.target.checked;
             }
 
-            document.querySelector("#cbArcs").onclick = function(e){
+            document.querySelector("#cb-arcs").onclick = function(e){
                 createArcs = e.target.checked;
             }
 
-            document.querySelector("#cbLines").onclick = function(e){
+            document.querySelector("#cb-lines").onclick = function(e){
                 createLines = e.target.checked;
             }
-        }
+        };
 
         // handy utility functions!
-        function getRandomColor(){
-        function getByte(){
-            return 55 + Math.round(Math.random() * 200);
-        }
-        return "rgba(" + getByte() + "," + getByte() + "," + getByte() + ",.8)";
-        }
+        let getRandomColor = () => {
+            let getByte = () => {
+                return 55 + Math.round(Math.random() * 200);
+            };
+            return `rgba(${getByte()}, ${getByte()},${getByte()},.8)`;
+        };
 
-        function getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
+        let getRandomInt = (min, max) => {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        };
     </script>
 </head>
 <body>
@@ -199,22 +199,22 @@
         Get a real browser!
     </canvas>
     <section>
-        <button id="btnPlay">Play</button>
-        <button id="btnPause">Pause</button>
-        <button id="btnClearScreen">Clear Screen</button>
+        <button id="btn-play">Play</button>
+        <button id="btn-pause">Pause</button>
+        <button id="btn-clear-screen">Clear Screen</button>
       </section>
       <section>
         <span>
-          <input type="checkbox" id="cbRectangles" checked>
-          <label for="cbRectangles">Rectangles</label>
+          <input type="checkbox" id="cb-rectangles" checked>
+          <label for="cb-rectangles">Rectangles</label>
         </span>
         <span>
-            <input type="checkbox" id="cbArcs" checked>
-            <label for="cbArcs">Arcs</label>
+            <input type="checkbox" id="cb-arcs" checked>
+            <label for="cb-arcs">Arcs</label>
         </span>
         <span>
-            <input type="checkbox" id="cbLines" checked>
-            <label for="cbLines">Lines</label>
+            <input type="checkbox" id="cb-lines" checked>
+            <label for="cb-lines">Lines</label>
         </span>
       </section>
       <section>
