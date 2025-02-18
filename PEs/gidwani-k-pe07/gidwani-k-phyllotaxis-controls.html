@@ -6,11 +6,12 @@
 	<style>canvas{ border: 1px solid black; }</style>
 	<script>
 	"use strict";
-	const canvasWidth = 400, canvasHeight = 300;
+	const canvasWidth = 500, canvasHeight = 500;
 	let ctx;
     let n = 0;
-    const divergence = 137.5;
-    const c = 4;
+    let divergence = 137.5;
+    let c = 4;
+    const fps = 60;
 
     window.onload = init;
 
@@ -19,11 +20,14 @@
 		canvas.width = canvasWidth;
 		canvas.height = canvasHeight;
 		ctx.fillRect(0,0,canvasWidth,canvasHeight);
+
+		setupUI();
+
         loop();
     }
 
     let loop = () => {
-        setTimeout(loop,1000/30);
+        setTimeout(loop,1000/fps);
 
         // each frame draw a new dot
         // `a` is the angle
@@ -36,10 +40,23 @@
         let x = r * Math.cos(a) + canvasWidth/2;
         let y = r * Math.sin(a) + canvasHeight/2;
 
-        let color = `rgb(${n % 256},0,255)`;
+        // Circular
+        //let color = `rgb(${n % 256},0,255)`;
+        
+        // Fibonacci
+        // let aDegrees = (n * divergence) % 256;
+        // let color = `rgb(${aDegrees},0,255)`;
+        
+        // Rainbow Fibonacci
+        let aDegrees = (n * divergence) % 361;
+        let color = `hsl(${aDegrees},100%,50%)`;
+        
+        // Rainbow Circular
+        //let color = `hsl(${n/5 % 361},100%,50%)`;
         drawCircle(ctx,x,y,2,color);
 
         n++;
+        r += 1;
     }
 
 	// helpers
@@ -57,10 +74,72 @@
 		ctx.restore();
 	}
 
+    let setupUI = () => {
+		document.querySelector("#ctrl-divergence").onchange = function(e) {
+			// console.log(e.target.value);
+			divergence = e.target.value;
+		};
+
+		document.querySelector("#ctrl-padding").onchange = function(e) {
+			// console.log(e.target.value);
+			c = e.target.value;
+		};
+
+		document.querySelector("#btn-restart").onclick = function() {
+			ctx.fillRect(0, 0, canvasWidth, canvasHeight, "black");
+			n = 0;
+		};
+	}
+
 	</script>
 </head>
 <body>
 <canvas id="canvas"></canvas>
 
+<div id="controls">
+	<label>Divergence Angle</label>
+	<select id="ctrl-divergence">
+		<option value="137.1">137.1</option>
+		<option value="137.3">137.3</option>
+		<option value="137.5" selected>137.5</option>
+		<option value="137.7">137.7</option>
+		<option value="137.7">137.9</option>
+	</select>
+	<br>
+	<label>Padding Distance</label>
+	<select id="ctrl-padding">
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4" selected>4</option>
+		<option value="5">5</option>
+		<option value="6">6</option>
+	</select>
+	<br>
+	<button id="btn-restart">Restart App</button>
+	<hr>
+	<h1>About This App</h1>
+	<ul>
+		<li>
+			<p>Dropdown menu to change divergence</p>
+		</li>
+		<li>
+			<p>Dropdown menu to change padding</p>
+		</li>
+		<li>
+			<p>Button to clear screen</p>
+		</li>
+		<li>
+			<p>Changes made to starter code:</p>
+			<ul>
+				<li>
+					<p>Increased frame rate to 60 FPS</p>
+				</li>
+				<li>
+					<p>Increased canvas size to 500 x 500</p>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</div>
 </body>
 </html>
