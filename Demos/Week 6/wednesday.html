@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas width="800" height="800"></canvas>
+
+    <script>
+        const canvas = document.querySelector('canvas');
+        const ctx = canvas.getContext('2d');
+
+
+        let mousePosition = [0, 0];
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            
+            const adjustedX = e.clientX - rect.x;
+            const adjustedY = e.clientY - rect.y;
+            
+            mousePosition[0] = adjustedX;
+            mousePosition[1] = adjustedY;
+        });
+
+        const triangle = (ctx, p1, p2, p3) => {
+            // use ctx width / 2
+            
+            ctx.beginPath();
+                ctx.moveTo(...p1);
+                ctx.lineTo(...p2);
+                ctx.lineTo(...p3);
+            ctx.closePath();
+
+            ctx.fill();
+            ctx.stroke();
+        }
+
+        // const update = () => {
+        //     ctx.clearRect(0, 0, 800, 800);
+
+        //     // ctx.save();
+        //     // ctx.rotate(15 * Math.PI / 180);
+        //     // ctx.save();
+        //     // ctx.rotate(30 * Math.PI / 180);
+
+        //     // ctx.save();
+        //     //     ctx.fillStyle = 'red';
+        //     //     ctx.translate(200, 200);
+        //     //     triangle(ctx, 
+        //     //             [0, 0], [100, 100], [-100, 100]
+        //     //     );
+        //     // ctx.restore();
+
+        //     // ctx.save();
+        //     //     ctx.fillStyle = 'green';
+        //     //     ctx.translate(400, 400);
+        //     //     triangle(ctx, 
+        //     //         [0, 0], [100, 100], [-100, 100]
+        //     //     );
+        //     // ctx.restore();
+            
+        //     // ctx.restore();
+        //     // ctx.restore();
+        //     // ctx.fillStyle = 'purple';
+        //     // triangle(ctx, 
+        //     //     [0, 0], [100, 100], [-100, 100]
+        //     // );
+
+        //     // ctx.save();
+        //     //     ctx.fillStyle = 'green';
+        //     //     ctx.scale(3, .5);
+        //     //     ctx.translate(200, 400);
+        //     //     triangle(ctx, 
+        //     //         [0, 0], [100, 100], [-100, 100]
+        //     //     );
+        //     // ctx.restore();
+
+        //     requestAnimationFrame(update);
+        // }
+
+        // update();
+
+        const triangles = Array.from({length: 10}, (_, i) => i)
+            .map(i => {
+                return {
+                    center: [Math.random(), Math.random()],
+                    rotation: Math.random(i / 10) * Math.PI * 2
+                }
+            });
+    </script>
+</body>
+</html>
