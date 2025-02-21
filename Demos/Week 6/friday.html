@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img>
+
+    <script type="module"> // Required "module" type on the script tag to import
+        // import {first_name, make_full_name} from './friday-test.js';
+
+        // console.log(make_full_name("first", "last"));
+
+        // If using code from previous demos or exercises, make a note!
+
+
+
+        // const getDogs = () => {
+        //     return fetch('https://dog.ceo/api/breeds/image/random')
+        //         .then(result => { // Make the connection to the other machine
+                    
+        //             //return result.json();
+        //             return result.text();
+        //         })
+        //         .then(the_data => { // Pull the data from the other machine
+
+        //             // Since we've turned the json to a .txt,
+        //             // we can parse it again with JSON.parse
+        //             const the_real_data = JSON.parse(the_data);
+
+        //             //document.querySelector('img').src = the_data.message;
+        //             document.querySelector('img').src = the_real_data.message;
+        //         });
+        // };
+
+        // getDogs();
+
+
+        const students = [
+            { name: 'John', age: 20, city: 'New York' },
+            { name: 'Jack', age: 19, city: 'Miami' },
+            { name: 'Jill', age: 21, city: 'Seattle' },
+            { name: 'Katie', age: 22, city: 'DC' }
+        ];
+
+        // let array_of_names = [];
+        // for (let i = 0; i < students.length; i++) {
+        //     const name = students[i].name;
+        //     array_of_names.push(name);
+        // }
+
+        const array_of_names = students.map(student => {
+            const name = student.name;
+            return name;
+        });
+
+        console.log(array_of_names);
+
+        const name_html = array_of_names.map(name => {
+            return `<li>${name}</li>`
+        });
+        console.log(name_html);
+
+        const list_html = `
+            <ul>
+            ${name_html.join('\n')}
+            </ul>
+            `;
+        
+        console.log(list_html);
+
+        // your element.innerHTML = your data
+    </script>
+</body>
+</html>
