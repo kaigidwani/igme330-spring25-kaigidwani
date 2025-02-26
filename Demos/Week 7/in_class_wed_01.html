@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Pixels</title>
+    
+</head>
+<body>
+    <canvas id="pixelCanvas" width="600" height="400"></canvas>
+
+    <script type="module">
+        // Get the canvas element and its context
+        const canvas = document.getElementById('pixelCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Create an array of pixel objects
+        const pixels = [
+            { x: 100, y: 100, size: 20, color: 'red' },
+            { x: 200, y: 150, size: 15, color: 'blue' },
+            { x: 300, y: 200, size: 25, color: 'green' },
+            { x: 150, y: 250, size: 10, color: 'purple' },
+            { x: 400, y: 100, size: 30, color: 'orange' },
+            { x: 250, y: 300, size: 18, color: 'teal' },
+            { x: 450, y: 200, size: 22, color: 'magenta' },
+            { x: 350, y: 150, size: 12, color: 'yellow' },
+            { x: 500, y: 300, size: 28, color: 'cyan' },
+            { x: 150, y: 150, size: 16, color: 'lime' }
+        ];
+        
+        const translatePixel = (pixel) => {
+            return {
+                // Same thing as below but more concise and using spreading
+                ...pixel,
+                x: pixel.x + 10
+                // ...pixel has to come first so that the x can override it.
+                // if you swap the two the x + 10 will be overridden by the copied x
+
+                // x: pixel.x + 10,
+                // y: pixel.y,
+                // size: pixel.size,
+                // color: pixel.color
+            }
+        };
+
+        const resizeAndTranslatePixel = (pixel) => {
+            return {
+                ...pixel,
+                x: pixel.x + 20,
+                y: pixel.y + 20,
+                size: pixel.size * 2
+            }
+        }
+
+        // let movedPixels = [];
+        // for (let i = 0; i < pixels.length; i++) {
+        //     let thisPixel = pixels[i];
+        //     movedPixels.push(translatePixel(thisPixel));
+        // }
+        let movedPixels = pixels.map(translatePixel);
+        let resizedAndTranslatedPixels = pixels.map(resizeAndTranslatePixel);
+        let leftPixels = pixels.filter(pixel => {
+            return pixel.x < 300;
+        })
+        const greenishPixels = pixels.filter(pixel => {
+            return (pixel.color === 'green' ||
+                    pixel.color === 'lime' || 
+                    pixel.color === 'teal' || 
+                    pixel.color === 'cyan');
+
+            // return ['green', 'lime', 'cyan', 'teal'].includes(pixel.color);
+        })
+        const greenishLeft = pixels
+            .filter(pixel => {
+                return (pixel.color === 'green' ||
+                        pixel.color === 'lime' || 
+                        pixel.color === 'teal' || 
+                        pixel.color === 'cyan');
+
+                // return ['green', 'lime', 'cyan', 'teal'].includes(pixel.color);
+            })
+            .filter(pixel => {
+                return pixel.x < 300;
+            });
+
+        // Function to draw a pixel
+        const drawPixel = ({ x, y, size, color }) => {
+            ctx.save();
+                ctx.fillStyle = color;
+                ctx.fillRect(x, y, size, size);
+                ctx.strokeStyle = 'black';
+                ctx.strokeRect(x, y, size, size);
+            ctx.restore();
+        };
+
+        const drawAllPixels = (some_pixels) => {
+            for(let i = 0; i < some_pixels.length; i++) {
+                drawPixel(some_pixels[i]);
+            }
+        }
+        
+        // Optional: Add some animation or interactivity
+        const update = () => {
+            ctx.clearRect(0, 0, 600, 400);
+            
+            // drawAllPixels(pixels);
+            // drawAllPixels(movedPixels);
+            // drawAllPixels(resizedAndTranslatedPixels);
+            //drawAllPixels(leftPixels);
+            drawAllPixels(greenishPixels);
+
+            requestAnimationFrame(update);
+        };
+        
+        update();
+    </script>
+</body>
+</html>
