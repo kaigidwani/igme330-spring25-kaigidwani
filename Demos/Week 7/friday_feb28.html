@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        // Make an array of numbers 0-9
+            // let nums = [];
+            // for(i = 0; i < 9; i++){console.log(i);}
+
+        // .from produces an array from an 'array like thing'
+        // let nums = Array.from({length: 10}, (_, i), )
+
+        let nums = [...Array(10).keys()];
+
+        // Produce an array of numbers 1 - 10
+        let increaseNum = (num) => num + 1;
+        let numsPlus1 = nums.map(increaseNum);
+
+        // Produce an array of numbers 1, 4, 9, 25...
+
+        // Any of these 3 ways to square something work just fine
+        // let numsSquared = numsPlus1.map((num) => num * num);
+        let numsSquared = numsPlus1.map((num) => {
+            // return Math.pow(num, 2);
+            return num ** 2;
+        });
+
+
+        let names = [
+            'Chrisa', 'Joette', 'Shadrachette', 'Dana', 'Travisa'
+        ];
+
+        const sayHi = (name) => {
+            return `Hello ${name}`;
+        }
+        let hellos = names.map(sayHi);
+
+        const map = (func, array) => {
+            let mappedArr = [];
+            for (let i = 0; i < array.length; i++) {
+                const mapped = func(array[i]);
+                mappedArr.push(mapped)
+            }
+            return mappedArr;
+        }
+
+        // Make an array of even numbers 0 - 18
+        const evens = nums.map((num) => {
+            return num * 2;
+        });
+
+
+        // Make an array of odd numbers 1 - 19
+        const odds = numsPlus1.map((num) => {
+            return num * 2 - 1;
+        });
+        // Alernate way to do this without numsPlus1:
+        // const odds = evens.map(num => num + 1);
+
+        // (use filter) make an array of even numbers 0 - 18
+        const biggerEvens = [...Array(20).keys()].filter((num) => {
+            return num % 2 === 0;
+        });
+        let helloNumbers = alsoEvens.map(sayHi);
+
+        // let sum = 0;
+        // for (let i = 0; i < biggerEvens.length; i++) {
+        //     sum += biggerEvens[i];
+        // }
+        let sum = biggerEvens.reduce((acc, num) => {
+            return acc + num;
+        }, 0);
+
+        // Reduce takes two paramaters
+        // acc for accumulation. Always use 'acc' for this
+        // The 0 at the end of the function is the very first number for acc to start with.
+        // Similar to a for loop's int i = 0; which starts it at 0
+
+        // Side note: I wonder if you can make a cool fibonacci sequence with reduce...
+
+        // Map transforms an array from one thing into another
+        // Filter removes a part of an array
+        // Reduce smashes them together into smaller pieces of data
+
+        let reversed = biggerEvens.reduce((acc, num) => {
+            return [num, ...acc];
+        }, [])
+        
+        
+
+    </script>
+
+</body>
+</html>
