@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // const deepFreeze = (obj) => {
+        //     Object.freeze(obj);
+        //     for (let key in obj) {
+        //         if (typeof obj[key] === 'object' && obj[key] ===! null) {
+        //             deepFreeze(obj[key]);
+        //         }
+        //     }
+        // }
+
+        // // Create the duck object
+        // const duck = {
+        //     name: 'Quackers',
+        //     religion: 'Scoiety of Friends',
+        //     color: 'minimum-wage-green',
+        //     children: [
+        //         'Doug Ling',
+        //         'Doug Smith',
+        //         'Doug Johnson'
+        //     ]
+        // };
+
+        // Object.freeze(duck); // Prevents the object from being edited
+
+        // // Attempt to edit the duck object
+        // duck.name = 'James';
+        // duck.color = 'rit-orange';
+        // duck.children.push('Doug-link');
+        // duck.religion = 'Watched for the Duck in the Night';
+        // duck.school = 'RIT';
+
+        // // console.log(duck);
+
+        // const keys = Object.keys(duck);
+        // console.log(keys);
+
+        // const values = Object.values(duck);
+        // console.log(values);
+
+        // const entries = Object.entries(duck);
+        // console.log(entries);
+
+        // const theEntries = Object.entries(duck);
+        // for (let [key, value] of theEntries) {
+        //     console.log(`${key} => ${value}`);
+        // }
+
+        // class Duck {
+        //     constructor(name, religion, color, children) {
+        //         this.name = name;
+        //         this.religion = religion;
+        //         this.color = color;
+        //         this.children = children;
+        //         this.sound = 'Quack';
+        //     }
+        // }
+
+        // const say = (name, sound) => {
+        //     console.log(name);
+        //     console.log('says');
+        //     console.log(sound);
+        // }
+
+        // const quackers = new Duck('Quackers', 'Society of Friends', 'minimum-wage-green', ['Doug Ling', 'Doug Smith', 'Doug Johnson']);
+
+
+        // const travis = {
+        //     name: 'Travis',
+        //     sound: 'Woof!',
+        //     children: ['Doug Ling', 'Doug Smith', 'Doug Johnson']
+        // };
+
+        // say(quackers);
+        // say(travis);
+
+        const complex_duck = {
+            name: {
+                first: 'Quackers',
+                last: 'The Duck'
+            },
+            religion: {
+                name: 'Society of Friends',
+                founder: 'George Fox'
+            },
+            color: {
+                r: 100,
+                g: 50,
+                b: 25
+            },
+            children: ['Doug Ling', 'Doug Smith', 'Doug Johnson']
+        }
+
+        const {religion: {founder}} = complex_duck;
+        console.log(founder);
+
+        //const heir = complex_duck.children[0];
+        const {children: [heir, second_born, third_born]} = complex_duck;
+        console.log(heir);
+        console.log(second_born);
+        console.log(third_born);
+
+    </script>
+</body>
+</html>
