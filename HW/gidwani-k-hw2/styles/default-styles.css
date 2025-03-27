@@ -15,7 +15,7 @@ body {
     margin-left: 1rem;
   }
   
-  #volumeLabel{
+  #label-volume{
     margin-left: 1rem;
   }
   
@@ -23,7 +23,7 @@ body {
     margin-bottom: 1rem;
   }
   
-  #playButton{
+  #btn-play{
     font-size: 1.2rem;
     width: 6rem;
   }
@@ -36,7 +36,7 @@ body {
     content: "Play";
   }
   
-  #fsButton{
+  #btn-fs{
     font-size: 1.2rem;
     width: 8rem;
   }

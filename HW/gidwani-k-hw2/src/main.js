@@ -42,8 +42,9 @@ let init = () => {
 
 let setupUI = (canvasElement) => {
   // A - hookup fullscreen button
-  const fsButton = document.querySelector("#fsButton");
-	
+  const fsButton = document.querySelector("#btn-fs");
+	const playButton = document.querySelector("#btn-play");
+  
   // add .onclick event to button
   playButton.onclick = e => {
     console.log(`audioCtx.state before = ${audio.audioCtx.state}`);
@@ -70,8 +71,8 @@ let setupUI = (canvasElement) => {
   };
 
   // C - hookup volume slider & label
-  let volumeSlider = document.querySelector("#volumeSlider");
-  let volumeLabel = document.querySelector("#volumeLabel");
+  let volumeSlider = document.querySelector("#slider-volume");
+  let volumeLabel = document.querySelector("#label-volume");
   
   // add .oninput event to slider
   volumeSlider.oninput = e => {
@@ -85,7 +86,7 @@ let setupUI = (canvasElement) => {
   volumeSlider.dispatchEvent(new Event("input"));
 
   // D - hookup track <select>
-  let trackSelect = document.querySelector("#trackSelect");
+  let trackSelect = document.querySelector("#track-select");
   // add .onchange event to <select>
   trackSelect.onchange = e => {
     audio.loadSoundFile(e.target.value);
@@ -99,7 +100,7 @@ let setupUI = (canvasElement) => {
     showGradient = e.target.checked;
   }
 
-  document.querySelector("#cg-bars").onclick = function(e){
+  document.querySelector("#cb-bars").onclick = function(e){
     showBars = e.target.checked;
   }
 
