@@ -3,7 +3,7 @@ let audioCtx;
 
 // **These are "private" properties - these will NOT be visible outside of this module (i.e. file)**
 // 2 - WebAudio nodes that are part of our WebAudio audio routing graph
-let element, sourceNode, analyserNode, gainNode, biquadFilter, convolver;
+let element, sourceNode, analyserNode, gainNode, biquadFilter;
 
 // 3 - here we are faking an enumeration
 const DEFAULTS = Object.freeze({
@@ -53,14 +53,10 @@ let setupWebaudio = (filePath) => {
     // Create a biquad filter
     biquadFilter = audioCtx.createBiquadFilter();
 
-    // Create a convolver
-    convolver = audioCtx.createConvolver();
-
     // 8 - connect the nodes - we now have an audio graph
     sourceNode.connect(analyserNode);
-    analyserNode.connect(gainNode);
-    biquadFilter.connect(convolver);
-    convolver.connect(gainNode);
+    analyserNode.connect(biquadFilter);
+    biquadFilter.connect(gainNode);
     gainNode.connect(audioCtx.destination);
 }
 
