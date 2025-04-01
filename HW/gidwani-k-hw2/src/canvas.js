@@ -116,14 +116,14 @@ let draw = (params={}) => {
 
                 let circleRadius = percent * maxRadius;
                 ctx.beginPath();
-                    ctx.fillStyle = utils.makeColor(172, 215, 1, .34 - percent/3.0);
+                    ctx.fillStyle = utils.makeColor(255, 255, 255, .34 - percent/3.0);
                     ctx.arc(canvasWidth/2, canvasHeight/2, circleRadius, 0, 2 * Math.PI, false);
                     ctx.fill();
                 ctx.closePath();
 
                 // bigger, more transparent
                 ctx.beginPath();
-                    ctx.fillStyle = utils.makeColor(172, 215, 1, .10 - percent/10.0);
+                    ctx.fillStyle = utils.makeColor(255, 255, 255, .10 - percent/10.0);
                     ctx.arc(canvasWidth/2, canvasHeight/2, circleRadius * 1.5, 0, 2 * Math.PI, false);
                     ctx.fill();
                 ctx.closePath();
@@ -131,7 +131,7 @@ let draw = (params={}) => {
                 // smaller
                 ctx.save();
                     ctx.beginPath();
-                        ctx.fillStyle = utils.makeColor(172, 215, 1, .5 - percent/5.0);
+                        ctx.fillStyle = utils.makeColor(255, 255, 255, .5 - percent/5.0);
                         ctx.arc(canvasWidth/2, canvasHeight/2, circleRadius * .50, 0, 2 * Math.PI, false);
                         ctx.fill();
                     ctx.closePath();
