@@ -1,0 +1,21 @@
+{
+    "title": "The Guy She Was Interested In Wasn't A Guy At All Audio Visualizer",
+    "tracks": [
+        {
+            "src": "media/02-The Pretender - Foo Fighters.mp3",
+            "trackName": "The Pretender",
+            "artistName": "Foo Fighters"
+        },
+        {
+            "src": "media/07-Black Hole Sun - Soundgarden.mp3",
+            "trackName": "Black Hole Sun",
+            "artistName": "Soundgarden"
+        },
+        {
+            "src": "media/14-Reptilia - The Strokes.mp3",
+            "trackName": "Reptilia",
+            "artistName": "The Strokes"
+        }
+    ],
+    "instructions": "Choose a track from the list and watch the audio visualizer! After a track ends, choose another one from the list! Adjust options to tweak both the audio and the visuals!"
+}
