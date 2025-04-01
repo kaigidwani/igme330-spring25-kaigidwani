@@ -17,6 +17,8 @@ let showCircles = true;
 let showNoise = false;
 let showInvert = false;
 let showEmboss = false;
+let boostBass = false;
+let boostTreble = false;
 
 const drawParams = {
   showGradient : true,
@@ -119,7 +121,41 @@ let setupUI = (canvasElement) => {
   document.querySelector("#cb-emboss").onclick = function(e){
     showEmboss = e.target.checked;
   }
+
+  document.querySelector('#cb-bass').checked = boostBass;
+
+  document.querySelector("#cb-bass").onchange = function(e){
+    boostBass = e.target.checked;
+    toggleLowshelf();
+  }
+
+  document.querySelector('#cb-treble').checked = boostTreble;
+
+  document.querySelector("#cb-treble").onchange = function(e){
+    boostTreble = e.target.checked;
+    toggleHighshelf();
+  }
 } // end setupUI
+
+
+function toggleLowshelf(){
+  if(boostBass){
+    audio.lowshelfBiquadFilter.frequency.setValueAtTime(1500, audio.audioCtx.currentTime);
+    audio.lowshelfBiquadFilter.gain.setValueAtTime(8, audio.audioCtx.currentTime);
+  }else{
+    audio.lowshelfBiquadFilter.gain.setValueAtTime(0, audio.audioCtx.currentTime);
+  }
+}
+
+function toggleHighshelf(){
+  if(boostTreble){
+    audio.highshelfBiquadFilter.frequency.setValueAtTime(1000, audio.audioCtx.currentTime);
+    audio.highshelfBiquadFilter.gain.setValueAtTime(8, audio.audioCtx.currentTime);
+  }else{
+    audio.highshelfBiquadFilter.gain.setValueAtTime(0, audio.audioCtx.currentTime);
+  }
+}
+
 
 let loop = () => {
   /* NOTE: This is temporary testing code that we will delete in Part II */

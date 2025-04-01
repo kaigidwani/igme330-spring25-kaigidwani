@@ -3,7 +3,7 @@ let audioCtx;
 
 // **These are "private" properties - these will NOT be visible outside of this module (i.e. file)**
 // 2 - WebAudio nodes that are part of our WebAudio audio routing graph
-let element, sourceNode, analyserNode, gainNode, biquadFilter;
+let element, sourceNode, analyserNode, gainNode, highshelfBiquadFilter, lowshelfBiquadFilter;
 
 // 3 - here we are faking an enumeration
 const DEFAULTS = Object.freeze({
@@ -50,13 +50,18 @@ let setupWebaudio = (filePath) => {
     gainNode = audioCtx.createGain();
     gainNode.gain.value = DEFAULTS.gain;
 
-    // Create a biquad filter
-    biquadFilter = audioCtx.createBiquadFilter();
+    // Create the biquad filters
+    lowshelfBiquadFilter = audioCtx.createBiquadFilter();
+    lowshelfBiquadFilter.type = "lowshelf";
+
+    highshelfBiquadFilter = audioCtx.createBiquadFilter();
+    highshelfBiquadFilter.type = "highshelf";
 
     // 8 - connect the nodes - we now have an audio graph
     sourceNode.connect(analyserNode);
-    analyserNode.connect(biquadFilter);
-    biquadFilter.connect(gainNode);
+    analyserNode.connect(lowshelfBiquadFilter);
+    lowshelfBiquadFilter.connect(highshelfBiquadFilter);
+    highshelfBiquadFilter.connect(gainNode);
     gainNode.connect(audioCtx.destination);
 }
 
@@ -77,4 +82,4 @@ let setVolume = (value) => {
     gainNode.gain.value = value;
 }
 
-export {audioCtx, setupWebaudio, playCurrentSound, pauseCurrentSound, loadSoundFile, setVolume, analyserNode};
+export {audioCtx, setupWebaudio, playCurrentSound, pauseCurrentSound, loadSoundFile, setVolume, analyserNode, lowshelfBiquadFilter, highshelfBiquadFilter};
