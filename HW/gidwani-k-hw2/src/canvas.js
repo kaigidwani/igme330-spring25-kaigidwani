@@ -28,6 +28,7 @@ koga.src = 'sprites/mitsuki koga.png';
 // Default colors, can be inverted
 let primaryColor = 'black';
 let secondaryColor = 'white';
+let theGreen = utils.makeColor(172, 215, 1);
 
 let setupCanvas = (canvasElement,analyserNodeRef) => {
 	// create drawing context
@@ -44,17 +45,17 @@ let setupCanvas = (canvasElement,analyserNodeRef) => {
     // Create sprite for Aya Oosawa on the middle left
     sprites[0] = new Sprite(
         oosawa,
-        canvasWidth * 0.25,  // 25% from the left edge
+        canvasWidth * 0.15,  // 15% from the left edge
         canvasHeight * 0.5,  // Middle of the screen vertically
-        150                  // Initial size of 150px
+        300                  // Initial size
     );
     
     // Create sprite for Mitsuki Koga on the middle right
     sprites[1] = new Sprite(
         koga,
-        canvasWidth * 0.75,  // 75% from the left edge
+        canvasWidth * 0.85,  // 85% from the left edge
         canvasHeight * 0.5,  // Middle of the screen vertically
-        150                  // Initial size of 150px
+        300                  // Initial size
     );
 }
 
@@ -70,7 +71,7 @@ let draw = (params={}) => {
 	
 	// 2 - draw background
     ctx.save();
-        ctx.fillStyle = secondaryColor;
+        ctx.fillStyle = theGreen;
         //ctx.globalAlpha = .1;
         ctx.fillRect(0,0,canvasWidth,canvasHeight);
     ctx.restore();
@@ -87,13 +88,14 @@ let draw = (params={}) => {
 	if (params.showBars) {
         let barSpacing = 2.5;
         let margin = 5;
-        let screenWidthForBars = canvasWidth - (audioData.length * barSpacing) - margin * 2;
+        let screenWidthForBars = 400 + canvasWidth - (audioData.length * barSpacing) - margin * 2;
         let barWidth = screenWidthForBars / audioData.length;
-        let barHeight = 200;
+        let barHeight = 100;
         let topSpacing = 100;
 
         ctx.save();
-            ctx.fillStyle = primaryColor;
+            ctx.fillStyle = secondaryColor;
+            ctx.lineWidth = 0.5;
             ctx.strokeStyle = primaryColor;
             // loop through the data and draw!
             for (let i = 0; i < audioData.length; i++) {
@@ -175,7 +177,10 @@ let draw = (params={}) => {
 			// data[i+2] is the blue channel
 			// data[i+3] is the alpha channel
             data[i] = data[i+1] = data[i+2] = 0; // zero out the red and green and blue channels
-			data[i] = 255; // make the red channel 100% red
+			//data[i] = 255; // make the red channel 100% red
+            data[i] = 172;
+            data[i+1] = 215;
+            data[i+2] = 1;
 		} // end if
 
         // invert only the black and white elements

@@ -42,7 +42,7 @@ export default class Sprite {
     }
 
     update(gain) {
-        this.scale = 1 + (gain / 100);
+        this.scale = 1 + (gain / 400);
         this.size = this.defaultSize * this.scale;
         this.updateDimensions();
     }
