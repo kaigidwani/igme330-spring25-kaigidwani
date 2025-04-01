@@ -11,6 +11,9 @@ import * as utils from './utils.js';
 
 let ctx,canvasWidth,canvasHeight,gradient,analyserNode,audioData;
 
+// Default colors, can be inverted
+let primaryColor = 'black';
+let secondaryColor = 'white';
 
 let setupCanvas = (canvasElement,analyserNodeRef) => {
 	// create drawing context
@@ -37,7 +40,7 @@ let draw = (params={}) => {
 	
 	// 2 - draw background
     ctx.save();
-        ctx.fillStyle = "white";
+        ctx.fillStyle = secondaryColor;
         //ctx.globalAlpha = .1;
         ctx.fillRect(0,0,canvasWidth,canvasHeight);
     ctx.restore();
@@ -60,8 +63,8 @@ let draw = (params={}) => {
         let topSpacing = 100;
 
         ctx.save();
-            ctx.fillStyle = 'black';
-            ctx.strokeStyle = 'rgba(0,0,0,0)';
+            ctx.fillStyle = primaryColor;
+            ctx.strokeStyle = primaryColor;
             // loop through the data and draw!
             for (let i = 0; i < audioData.length; i++) {
                 ctx.fillRect(margin + i * (barWidth + barSpacing), topSpacing + 256-audioData[i], barWidth, barHeight);
@@ -75,31 +78,27 @@ let draw = (params={}) => {
         ctx.save();
             ctx.globalAlpha = 0.5;
             for (let i = 0; i < audioData.length; i++) {
-                // red-ish circles
                 let percent = audioData[i] / 255;
 
                 // the green: #ACD701 172, 215, 1
 
                 let circleRadius = percent * maxRadius;
                 ctx.beginPath();
-                    //ctx.fillStyle = utils.makeColor(255, 111, 111, .34 - percent/3.0);
                     ctx.fillStyle = utils.makeColor(172, 215, 1, .34 - percent/3.0);
                     ctx.arc(canvasWidth/2, canvasHeight/2, circleRadius, 0, 2 * Math.PI, false);
                     ctx.fill();
                 ctx.closePath();
 
-                // blue-ish circles, bigger, more transparent
+                // bigger, more transparent
                 ctx.beginPath();
-                    //ctx.fillStyle = utils.makeColor("0, 0, 255, .10 - percent/10.0");
                     ctx.fillStyle = utils.makeColor(172, 215, 1, .10 - percent/10.0);
                     ctx.arc(canvasWidth/2, canvasHeight/2, circleRadius * 1.5, 0, 2 * Math.PI, false);
                     ctx.fill();
                 ctx.closePath();
 
-                // yellow-ish circles, smaller
+                // smaller
                 ctx.save();
                     ctx.beginPath();
-                        //ctx.fillStyle = utils.makeColor(200, 200, 0, .5 - percent/5.0);
                         ctx.fillStyle = utils.makeColor(172, 215, 1, .5 - percent/5.0);
                         ctx.arc(canvasWidth/2, canvasHeight/2, circleRadius * .50, 0, 2 * Math.PI, false);
                         ctx.fill();
@@ -134,13 +133,14 @@ let draw = (params={}) => {
 			data[i] = 255; // make the red channel 100% red
 		} // end if
 
-        // invert?
+        // invert only the black and white elements
         if(params.showInvert) {
-            let red = data[i], green = data[i+1], blue = data[i+2];
-            data[i] = 255 - red; // set red
-            data[i+1] = 255 - green; // set green
-            data[i+2] = 255 - blue; // set blue
-            //data[1+3] is the alpha, but we're leaving that alone
+            primaryColor = 'white';
+            secondaryColor = 'black';
+        }
+        else {
+            primaryColor = 'black';
+            secondaryColor = 'white';
         }
 	} // end for
 
