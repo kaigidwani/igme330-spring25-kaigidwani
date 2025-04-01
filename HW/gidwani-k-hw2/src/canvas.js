@@ -55,7 +55,7 @@ let draw = (params={}) => {
     }
 	// 4 - draw bars
 	if (params.showBars) {
-        let barSpacing = 2;
+        let barSpacing = 2.5;
         let margin = 5;
         let screenWidthForBars = canvasWidth - (audioData.length * barSpacing) - margin * 2;
         let barWidth = screenWidthForBars / audioData.length;
