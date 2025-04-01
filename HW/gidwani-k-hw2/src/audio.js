@@ -3,7 +3,7 @@ let audioCtx;
 
 // **These are "private" properties - these will NOT be visible outside of this module (i.e. file)**
 // 2 - WebAudio nodes that are part of our WebAudio audio routing graph
-let element, sourceNode, analyserNode, gainNode, highshelfBiquadFilter, lowshelfBiquadFilter;
+let element, sourceNode, analyserNode, gainNode, highshelfBiquadFilter, lowshelfBiquadFilter, playing;
 
 // 3 - here we are faking an enumeration
 const DEFAULTS = Object.freeze({
@@ -71,10 +71,12 @@ let loadSoundFile = (filePath) => {
 
 let playCurrentSound = () => {
     element.play();
+    playing = true;
 }
 
 let pauseCurrentSound = () => {
     element.pause();
+    playing = false;
 }
 
 let setVolume = (value) => {
@@ -82,4 +84,8 @@ let setVolume = (value) => {
     gainNode.gain.value = value;
 }
 
-export {audioCtx, setupWebaudio, playCurrentSound, pauseCurrentSound, loadSoundFile, setVolume, analyserNode, lowshelfBiquadFilter, highshelfBiquadFilter};
+let currentlyPlaying = () => {
+    return playing;
+}
+
+export {audioCtx, setupWebaudio, playCurrentSound, pauseCurrentSound, loadSoundFile, setVolume, analyserNode, lowshelfBiquadFilter, highshelfBiquadFilter, currentlyPlaying};

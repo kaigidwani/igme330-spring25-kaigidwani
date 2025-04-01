@@ -7,9 +7,23 @@
 	  - maybe a better name for this file/module would be *visualizer.js* ?
 */
 
+import * as Audio from './audio.js';
 import * as utils from './utils.js';
+import Sprite from './sprite.js';
 
 let ctx,canvasWidth,canvasHeight,gradient,analyserNode,audioData;
+
+let sprites = [];
+let vinylAngle = 0;
+
+const vinyl = new Image();
+vinyl.src = 'sprites/vinyl.png';
+
+const oosawa = new Image();
+oosawa.src = 'sprites/aya oosawa.png';
+
+const koga = new Image();
+koga.src = 'sprites/mitsuki koga.png';
 
 // Default colors, can be inverted
 let primaryColor = 'black';
@@ -26,6 +40,22 @@ let setupCanvas = (canvasElement,analyserNodeRef) => {
 	analyserNode = analyserNodeRef;
 	// this is the array where the analyser data will be stored
 	audioData = new Uint8Array(analyserNode.fftSize/2);
+
+    // Create sprite for Aya Oosawa on the middle left
+    sprites[0] = new Sprite(
+        oosawa,
+        canvasWidth * 0.25,  // 25% from the left edge
+        canvasHeight * 0.5,  // Middle of the screen vertically
+        150                  // Initial size of 150px
+    );
+    
+    // Create sprite for Mitsuki Koga on the middle right
+    sprites[1] = new Sprite(
+        koga,
+        canvasWidth * 0.75,  // 75% from the left edge
+        canvasHeight * 0.5,  // Middle of the screen vertically
+        150                  // Initial size of 150px
+    );
 }
 
 let draw = (params={}) => {
@@ -74,7 +104,7 @@ let draw = (params={}) => {
     }
 	// 5 - draw circles
     if (params.showCircles) {
-        let maxRadius = canvasHeight/4;
+        let maxRadius = canvasHeight/3;
         ctx.save();
             ctx.globalAlpha = 0.5;
             for (let i = 0; i < audioData.length; i++) {
@@ -105,6 +135,21 @@ let draw = (params={}) => {
                     ctx.closePath();
                 ctx.restore();
             }
+        ctx.restore();
+    }
+
+    // Rotate the vinyl
+    let rotationSpeed = .02;
+    if (Audio.currentlyPlaying()) {
+        vinylAngle += rotationSpeed;
+    }
+    const vinylSize = 200;
+
+    if (vinyl.complete) {
+        ctx.save();
+            ctx.translate(canvasWidth/2, canvasHeight/2);
+            ctx.rotate(vinylAngle);
+            ctx.drawImage(vinyl, -vinylSize / 2, -vinylSize / 2, vinylSize, vinylSize);
         ctx.restore();
     }
 
@@ -152,8 +197,22 @@ let draw = (params={}) => {
         }
     }
 	
+    // Calculate average audio level for sprite scaling
+    let audioSum = 0;
+    for (let i = 0; i < audioData.length; i++) {
+        audioSum += audioData[i];
+    }
+    let audioAvg = audioSum / audioData.length;
+    
 	// D) copy image data back to canvas
     ctx.putImageData(imageData, 0, 0);
+    
+    // Draw sprites AFTER putting image data back to canvas
+    // so they appear on top of all effects
+    sprites.forEach((sprite) => {
+        sprite.update(audioAvg);
+        sprite.draw(ctx);
+    });
     // end draw()
 }
 
