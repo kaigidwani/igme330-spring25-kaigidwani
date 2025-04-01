@@ -11,7 +11,7 @@ import * as audio from './audio.js';
 import * as canvas from './canvas.js';
 import * as utils from './utils.js';
 
-let showGradient = true;
+let showGradient = false;
 let showBars = true;
 let showCircles = true;
 let showNoise = false;
@@ -19,12 +19,14 @@ let showInvert = false;
 let showEmboss = false;
 let boostBass = false;
 let boostTreble = false;
+let toggleWaveform = false;
 
 const drawParams = {
   showGradient : true,
   showBars : true,
   showCircles : true,
-  showNoise : true
+  showNoise : true,
+  toggleWaveform : false
 };
 
 // 1 - here we are faking an enumeration
@@ -106,6 +108,10 @@ let setupUI = (canvasElement) => {
     showBars = e.target.checked;
   }
 
+  document.querySelector("#cb-waveform").onclick = function(e){
+    toggleWaveform = e.target.checked;
+  }
+
   document.querySelector("#cb-circles").onclick = function(e){
     showCircles = e.target.checked;
   }
@@ -160,7 +166,7 @@ function toggleHighshelf(){
 let loop = () => {
   /* NOTE: This is temporary testing code that we will delete in Part II */
   requestAnimationFrame(loop);
-  canvas.draw({showGradient, showBars, showCircles, showNoise, showInvert, showEmboss});
+  canvas.draw({showGradient, showBars, showCircles, showNoise, showInvert, showEmboss, toggleWaveform});
 }
 
 export {init};
