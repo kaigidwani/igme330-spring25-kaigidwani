@@ -1,6 +1,11 @@
 const { createServer } = require('http');
 
 const server = createServer((req, res) => {
+    console.log(`Request! ${req.url}`);
+
+    res.writeHead(200, { 'Content-type': 'text/plain'});
+    res.end(req.url + '\n');
+
     res.statusCode = 200;
     res.setHeader('Content-Type', 'type/plain');
     res.end('Hello World');
