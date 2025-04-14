@@ -34,17 +34,23 @@ const DEFAULTS = Object.freeze({
 	sound1  :  "media/02-The Pretender - Foo Fighters.mp3"
 });
 
-let init = () => {
+let init = (avData) => {
     audio.setupWebaudio(DEFAULTS.sound1);
 	console.log("init called");
 	console.log(`Testing utils.getRandomColor() import: ${utils.getRandomColor()}`);
 	let canvasElement = document.querySelector("canvas"); // hookup <canvas> element
-	setupUI(canvasElement);
+	setupUI(canvasElement, avData);
   canvas.setupCanvas(canvasElement,audio.analyserNode);
   loop();
 }
 
-let setupUI = (canvasElement) => {
+let setupUI = (canvasElement, avData) => {
+  // Set up the title
+  document.querySelector("#title").innerHTML = avData.title;
+
+  // Set up the instructions
+  document.querySelector("#instructions").innerHTML = avData.instructions;
+
   // A - hookup fullscreen button
   const fsButton = document.querySelector("#btn-fs");
 	const playButton = document.querySelector("#btn-play");
@@ -90,7 +96,13 @@ let setupUI = (canvasElement) => {
   volumeSlider.dispatchEvent(new Event("input"));
 
   // D - hookup track <select>
-  let trackSelect = document.querySelector("#track-select");
+
+  // Set up tracklist
+  const trackSelect = document.querySelector("#track-select");
+  trackSelect.innerHTML = avData.tracks.map(track =>
+    `<option value="${track.src}">${track.trackName} - ${track.artistName}</option>`
+  ).join("");
+
   // add .onchange event to <select>
   trackSelect.onchange = e => {
     audio.loadSoundFile(e.target.value);
@@ -99,10 +111,6 @@ let setupUI = (canvasElement) => {
         playButton.dispatchEvent(new MouseEvent("click"));
     }
   };
-
-  document.querySelector("#cb-gradient").onclick = function(e){
-    showGradient = e.target.checked;
-  }
 
   document.querySelector("#cb-bars").onclick = function(e){
     showBars = e.target.checked;
@@ -116,16 +124,8 @@ let setupUI = (canvasElement) => {
     showCircles = e.target.checked;
   }
 
-  document.querySelector("#cb-noise").onclick = function(e){
-    showNoise = e.target.checked;
-  }
-
   document.querySelector("#cb-invert").onclick = function(e){
     showInvert = e.target.checked;
-  }
-
-  document.querySelector("#cb-emboss").onclick = function(e){
-    showEmboss = e.target.checked;
   }
 
   document.querySelector('#cb-bass').checked = boostBass;

@@ -8,6 +8,10 @@
 </head>
 <body>
 <main>
+  <section>
+    <h1 id="title">Audio Visualizer</h1>
+  </section>
+
   <canvas width="800" height="400"></canvas>
   <div id="controls">
     <section>
@@ -29,13 +33,14 @@
     </section>
 
     <section>
-      <span><input type="checkbox" id="cb-gradient"><label for="cb-gradient">Show Gradient</label></span>
+      <p id="instructions">Press Play to start! Change the song from the Track dropdown. Adjust volume as needed. Play with other settings below! Enjoy! :)</p>
+    </section>
+
+    <section>
       <span><input type="checkbox" id="cb-bars" checked><label for="cb-bars">Show Bars</label></span>
       <span><input type="checkbox" id="cb-waveform"><label for="cb-waveform">Toggle Waveform</label></span>
       <span><input type="checkbox" id="cb-circles" checked><label for="cb-circles">Show Circles</label></span>
-      <span><input type="checkbox" id="cb-noise"><label for="cb-noise">Show Noise</label></span>
       <span><input type="checkbox" id="cb-invert"><label for="cb-invert">Invert Black/White</label></span>
-      <span><input type="checkbox" id="cb-emboss"><label for="cb-emboss">Show Emboss</label></span>
       <span><input type="checkbox" id="cb-bass"><label for="cb-bass">Extra Bass</label></span>
       <span><input type="checkbox" id="cb-treble"><label for="cb-treble">Extra Treble</label></span>
     </section>
