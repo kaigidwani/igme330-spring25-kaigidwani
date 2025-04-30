@@ -13,7 +13,7 @@ const DEFAULTS = Object.freeze({
 
 // 4 - create a new array of 8-bit integers (0-255)
 // this is a typed array to hold the audio frequency data
-let audioData = new Uint8Array(DEFAULTS.numSampls/2);
+let audioData = new Uint8Array(DEFAULTS.numSamples/2);
 
 // **Next are "public" methods - we are going to export all of these at the bottom of this file**
 let setupWebaudio = (filePath) => {
