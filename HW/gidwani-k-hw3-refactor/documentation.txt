@@ -1,0 +1,4 @@
+The two audio effect nodes I created are a bass boost and a treble boost that each boost their respective area of the audio.
+The Sprite class named Sprite is used to hold the information for the sprites of the characters on either side.
+The av-data.json file contains data for the title of the app, the tracklist which itself contains the file of the song, the name of the song, and the name of the artists, and lastly the json contains the instructions for the app.
+I removed the options for the gradient, emboss, and noise, as I thought they all only detracted from the experience of my audio visualizer. Additionally I changed the colors of all of my pieces, adjust the width and outline of the bars, added the spinning vinyl, and made the sprites change size to grow according to the current volume. I would give myself a 13% on this. I think I did pretty well, but there's more that I could have done to make it go even moreso above and beyond.
