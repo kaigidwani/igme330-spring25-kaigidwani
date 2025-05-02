@@ -7,9 +7,9 @@
 // In this instance, we feel the code is more readable if written this way
 // If you want to re-write these as ES6 arrow functions, to be consistent with the other files, go ahead!
 
-import * as audio from './audio.js';
-import * as canvas from './canvas.js';
-import * as utils from './utils.js';
+import * as audio from './audio';
+import * as canvas from './canvas';
+import * as utils from './utils';
 
 let showGradient = false;
 let showBars = true;
@@ -52,26 +52,28 @@ let setupUI = (canvasElement, avData) => {
   document.querySelector("#instructions").innerHTML = avData.instructions;
 
   // A - hookup fullscreen button
-  const fsButton = document.querySelector("#btn-fs");
-	const playButton = document.querySelector("#btn-play");
+  const fsButton = document.querySelector("#btn-fs") as HTMLButtonElement;
+	const playButton = document.querySelector("#btn-play") as HTMLButtonElement;
   
   // add .onclick event to button
   playButton.onclick = e => {
     console.log(`audioCtx.state before = ${audio.audioCtx.state}`);
+
+    const target = e.target as HTMLInputElement;
 
     // check if context is in suspended state (autoplay policy)
     if (audio.audioCtx.state == "suspended") {
         audio.audioCtx.resume();
     }
     console.log(`audioCtx.state after = ${audio.audioCtx.state}`);
-    if (e.target.dataset.playing == "no") {
+    if (target.dataset.playing == "no") {
         // if track is currently paused, play it
         audio.playCurrentSound();
-        e.target.dataset.playing = "yes"; // our CSS will set the text to "Pause"
+        target.dataset.playing = "yes"; // our CSS will set the text to "Pause"
         // if track IS playing, pause it
     } else {
         audio.pauseCurrentSound();
-        e.target.dataset.playing = "no"; // our CSS will set the text to "Play"
+        target.dataset.playing = "no"; // our CSS will set the text to "Play"
     }
   };
 
@@ -81,15 +83,17 @@ let setupUI = (canvasElement, avData) => {
   };
 
   // C - hookup volume slider & label
-  let volumeSlider = document.querySelector("#slider-volume");
-  let volumeLabel = document.querySelector("#label-volume");
+  let volumeSlider = document.querySelector("#slider-volume") as HTMLInputElement;
+  let volumeLabel = document.querySelector("#label-volume") as HTMLLabelElement;
   
   // add .oninput event to slider
   volumeSlider.oninput = e => {
+    const target = e.target as HTMLInputElement;
     // set the gain
-    audio.setVolume(e.target.value);
+    audio.setVolume(target.value);
+
     // update value of label to match value of slider
-    volumeLabel.innerHTML = Math.round((e.target.value/2 * 100));
+    volumeLabel.innerHTML = Math.round((parseFloat(target.value)/2 * 100)).toString();
   };
 
   // set value of label to match initial vlaue of slider
@@ -98,47 +102,59 @@ let setupUI = (canvasElement, avData) => {
   // D - hookup track <select>
 
   // Set up tracklist
-  const trackSelect = document.querySelector("#track-select");
+  const trackSelect = document.querySelector("#track-select") as HTMLInputElement;
   trackSelect.innerHTML = avData.tracks.map(track =>
     `<option value="${track.src}">${track.trackName} - ${track.artistName}</option>`
   ).join("");
 
   // add .onchange event to <select>
   trackSelect.onchange = e => {
-    audio.loadSoundFile(e.target.value);
+    const target = e.target as HTMLInputElement;
+
+    audio.loadSoundFile(target.value);
     // pause the current track if it is playing
     if (playButton.dataset.playing == "yes") {
         playButton.dispatchEvent(new MouseEvent("click"));
     }
   };
 
-  document.querySelector("#cb-bars").onclick = function(e){
-    showBars = e.target.checked;
+  let barsCheckbox = document.querySelector("#cb-bars") as HTMLInputElement;
+  barsCheckbox.onclick = function(e){
+    const target = e.target as HTMLInputElement;
+    showBars = target.checked;
   }
 
-  document.querySelector("#cb-waveform").onclick = function(e){
-    toggleWaveform = e.target.checked;
+  let waveformCheckbox = document.querySelector("#cb-waveform") as HTMLInputElement;
+  waveformCheckbox.onclick = function(e){
+    const target = e.target as HTMLInputElement;
+    toggleWaveform = target.checked;
   }
 
-  document.querySelector("#cb-circles").onclick = function(e){
-    showCircles = e.target.checked;
+  let circlesCheckbox = document.querySelector("#cb-circles") as HTMLInputElement;
+  circlesCheckbox.onclick = function(e){
+    const target = e.target as HTMLInputElement;
+    showCircles = target.checked;
   }
 
-  document.querySelector("#cb-invert").onclick = function(e){
-    showInvert = e.target.checked;
+  let invertCheckbox = document.querySelector("#cb-invert") as HTMLInputElement;
+  invertCheckbox.onclick = function(e){
+    const target = e.target as HTMLInputElement;
+    showInvert = target.checked;
   }
 
-  document.querySelector('#cb-bass').checked = boostBass;
-
-  document.querySelector("#cb-bass").onchange = function(e){
-    boostBass = e.target.checked;
+  let bassCheckbox = document.querySelector('#cb-bass') as HTMLInputElement
+  bassCheckbox.checked = boostBass;
+  bassCheckbox.onchange = function(e){
+    const target = e.target as HTMLInputElement;
+    boostBass = target.checked;
     toggleLowshelf();
   }
 
-  document.querySelector('#cb-treble').checked = boostTreble;
-
-  document.querySelector("#cb-treble").onchange = function(e){
-    boostTreble = e.target.checked;
+  let trebleCheckbox = document.querySelector('#cb-treble') as HTMLInputElement;
+  trebleCheckbox.checked = boostTreble;
+  trebleCheckbox.onchange = function(e){
+    const target = e.target as HTMLInputElement;
+    boostTreble = target.checked;
     toggleHighshelf();
   }
 } // end setupUI

@@ -7,9 +7,19 @@
 	  - maybe a better name for this file/module would be *visualizer.js* ?
 */
 
-import * as Audio from './audio.js';
-import * as utils from './utils.js';
-import Sprite from './sprite.js';
+import * as Audio from './audio';
+import * as utils from './utils';
+import Sprite from './sprite';
+
+interface DrawParams{
+    toggleWaveform: boolean,
+    showGradient: boolean,
+    showBars: boolean,
+    showCircles: boolean,
+    showNoise: boolean,
+    showInvert: boolean,
+    showEmboss: boolean
+}
 
 let ctx,canvasWidth,canvasHeight,gradient,analyserNode,audioData;
 
@@ -59,7 +69,7 @@ let setupCanvas = (canvasElement,analyserNodeRef) => {
     );
 }
 
-let draw = (params={}) => {
+let draw = (params:DrawParams) => {
     // 1 - populate the audioData array with the frequency data from the analyserNode
 	// notice these arrays are passed "by reference" 
     if (params.toggleWaveform) {
