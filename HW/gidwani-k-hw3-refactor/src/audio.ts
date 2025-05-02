@@ -18,7 +18,7 @@ let audioData = new Uint8Array(DEFAULTS.numSamples/2);
 // **Next are "public" methods - we are going to export all of these at the bottom of this file**
 let setupWebaudio = (filePath) => {
     // 1 - The || is because WebAudio has not been standardized across browsers yet
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const AudioContext = window.AudioContext;
     audioCtx = new AudioContext();
 
     // 2 - this creates an <audio> element
