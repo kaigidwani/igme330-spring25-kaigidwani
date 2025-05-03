@@ -1,8 +1,13 @@
-const makeColor = (red, green, blue, alpha = 1) => {
+type ColorStop = {
+  percent: number,
+  color: string
+};
+
+const makeColor = (red:number, green:number, blue:number, alpha:number = 1) => {
     return `rgba(${red},${green},${blue},${alpha})`;
   };
   
-  const getRandom = (min, max) => {
+  const getRandom = (min:number, max:number) => {
     return Math.random() * (max - min) + min;
   };
   
@@ -12,7 +17,7 @@ const makeColor = (red, green, blue, alpha = 1) => {
     return `rgba(${getByte()},${getByte()},${getByte()},1)`;
   };
   
-  const getLinearGradient = (ctx,startX,startY,endX,endY,colorStops) => {
+  const getLinearGradient = (ctx:CanvasRenderingContext2D,startX:number,startY:number,endX:number,endY:number,colorStops:ColorStop[]) => {
     let lg = ctx.createLinearGradient(startX,startY,endX,endY);
     for(let stop of colorStops){
       lg.addColorStop(stop.percent,stop.color);
@@ -21,15 +26,15 @@ const makeColor = (red, green, blue, alpha = 1) => {
   };
   
   // https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
-  const goFullscreen = (element) => {
+  const goFullscreen = (element:HTMLElement) => {
     if (element.requestFullscreen) {
       element.requestFullscreen();
-    } else if (element.mozRequestFullscreen) {
-      element.mozRequestFullscreen();
-    } else if (element.mozRequestFullScreen) { // camel-cased 'S' was changed to 's' in spec
-      element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) {
-      element.webkitRequestFullscreen();
+    } else if ((element as any).mozRequestFullscreen) {
+      (element as any).mozRequestFullscreen();
+    } else if ((element as any).mozRequestFullScreen) { // camel-cased 'S' was changed to 's' in spec
+      (element as any).mozRequestFullScreen();
+    } else if ((element as any).webkitRequestFullscreen) {
+      (element as any).webkitRequestFullscreen();
     }
     // .. and do nothing if the method is not supported
   };

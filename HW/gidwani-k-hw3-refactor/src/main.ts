@@ -29,27 +29,37 @@ const drawParams = {
   toggleWaveform : false
 };
 
+type AVData = {
+  title: string,
+  tracks: {
+    src: string,
+    trackName: string,
+    artistName: string
+  }[],
+  instructions: string
+}
+
 // 1 - here we are faking an enumeration
 const DEFAULTS = Object.freeze({
 	sound1  :  "media/02-The Pretender - Foo Fighters.mp3"
 });
 
-let init = (avData) => {
+let init = (avData:AVData) => {
     audio.setupWebaudio(DEFAULTS.sound1);
 	console.log("init called");
 	console.log(`Testing utils.getRandomColor() import: ${utils.getRandomColor()}`);
-	let canvasElement = document.querySelector("canvas"); // hookup <canvas> element
+	let canvasElement = document.querySelector("canvas") as HTMLCanvasElement; // hookup <canvas> element
 	setupUI(canvasElement, avData);
   canvas.setupCanvas(canvasElement,audio.analyserNode);
   loop();
 }
 
-let setupUI = (canvasElement, avData) => {
+let setupUI = (canvasElement:HTMLCanvasElement, avData:AVData) => {
   // Set up the title
-  document.querySelector("#title").innerHTML = avData.title;
+  document.querySelector("#title")!.innerHTML = avData.title;
 
   // Set up the instructions
-  document.querySelector("#instructions").innerHTML = avData.instructions;
+  document.querySelector("#instructions")!.innerHTML = avData.instructions;
 
   // A - hookup fullscreen button
   const fsButton = document.querySelector("#btn-fs") as HTMLButtonElement;
@@ -102,14 +112,14 @@ let setupUI = (canvasElement, avData) => {
   // D - hookup track <select>
 
   // Set up tracklist
-  const trackSelect = document.querySelector("#track-select") as HTMLInputElement;
+  const trackSelect = document.querySelector("#track-select") as HTMLSelectElement;
   trackSelect.innerHTML = avData.tracks.map(track =>
     `<option value="${track.src}">${track.trackName} - ${track.artistName}</option>`
   ).join("");
 
   // add .onchange event to <select>
   trackSelect.onchange = e => {
-    const target = e.target as HTMLInputElement;
+    const target = e.target as HTMLSelectElement;
 
     audio.loadSoundFile(target.value);
     // pause the current track if it is playing

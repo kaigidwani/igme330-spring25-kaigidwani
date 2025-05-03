@@ -21,9 +21,9 @@ interface DrawParams{
     showEmboss: boolean
 }
 
-let ctx,canvasWidth,canvasHeight,gradient,analyserNode,audioData;
+let ctx:CanvasRenderingContext2D,canvasWidth:number,canvasHeight:number,gradient:CanvasGradient,analyserNode:AnalyserNode,audioData:Uint8Array;
 
-let sprites = [];
+let sprites: Sprite[] = [];
 let vinylAngle = 0;
 
 const vinyl = new Image();
@@ -40,9 +40,9 @@ let primaryColor = 'black';
 let secondaryColor = 'white';
 let theGreen = utils.makeColor(172, 215, 1);
 
-let setupCanvas = (canvasElement,analyserNodeRef) => {
+let setupCanvas = (canvasElement:HTMLCanvasElement,analyserNodeRef:AnalyserNode) => {
 	// create drawing context
-	ctx = canvasElement.getContext("2d");
+	ctx = canvasElement.getContext("2d") as CanvasRenderingContext2D;
 	canvasWidth = canvasElement.width;
 	canvasHeight = canvasElement.height;
 	// create a gradient that runs top to bottom
@@ -54,7 +54,7 @@ let setupCanvas = (canvasElement,analyserNodeRef) => {
 
     // Create sprite for Aya Oosawa on the middle left
     sprites[0] = new Sprite(
-        oosawa,
+        oosawa.src,
         canvasWidth * 0.15,  // 15% from the left edge
         canvasHeight * 0.5,  // Middle of the screen vertically
         300                  // Initial size
@@ -62,7 +62,7 @@ let setupCanvas = (canvasElement,analyserNodeRef) => {
     
     // Create sprite for Mitsuki Koga on the middle right
     sprites[1] = new Sprite(
-        koga,
+        koga.src,
         canvasWidth * 0.85,  // 85% from the left edge
         canvasHeight * 0.5,  // Middle of the screen vertically
         300                  // Initial size

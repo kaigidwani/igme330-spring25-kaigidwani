@@ -1,22 +1,23 @@
 // 1 - our WebAudio context, **we will export and make this public at the bottom of the file**
-let audioCtx;
+let audioCtx:AudioContext;
 
 // **These are "private" properties - these will NOT be visible outside of this module (i.e. file)**
 // 2 - WebAudio nodes that are part of our WebAudio audio routing graph
-let element, sourceNode, analyserNode, gainNode, highshelfBiquadFilter, lowshelfBiquadFilter, playing;
+let element:HTMLAudioElement, sourceNode:MediaElementAudioSourceNode, analyserNode:AnalyserNode, gainNode:GainNode, highshelfBiquadFilter:BiquadFilterNode, lowshelfBiquadFilter:BiquadFilterNode, playing:boolean;
 
 // 3 - here we are faking an enumeration
-const DEFAULTS = Object.freeze({
-    gain: .5,
-    numSamples: 256
-});
-
-// 4 - create a new array of 8-bit integers (0-255)
-// this is a typed array to hold the audio frequency data
-let audioData = new Uint8Array(DEFAULTS.numSamples/2);
+// const DEFAULTS = Object.freeze({
+//     gain: .5,
+//     numSamples: 256
+// });
+// Here is real TypeScript enumeration
+enum Defaults {
+    gain = .5,
+    numSamples = 256
+}
 
 // **Next are "public" methods - we are going to export all of these at the bottom of this file**
-let setupWebaudio = (filePath) => {
+let setupWebaudio = (filePath: string) => {
     // 1 - The || is because WebAudio has not been standardized across browsers yet
     const AudioContext = window.AudioContext;
     audioCtx = new AudioContext();
@@ -44,11 +45,11 @@ let setupWebaudio = (filePath) => {
     */ 
 
     // fft stands for Fast Fourier Transform
-    analyserNode.fftSize = DEFAULTS.numSamples;
+    analyserNode.fftSize = Defaults.numSamples;
 
     // 7 - create a gain (volume) node
     gainNode = audioCtx.createGain();
-    gainNode.gain.value = DEFAULTS.gain;
+    gainNode.gain.value = Defaults.gain;
 
     // Create the biquad filters
     lowshelfBiquadFilter = audioCtx.createBiquadFilter();
@@ -65,7 +66,7 @@ let setupWebaudio = (filePath) => {
     gainNode.connect(audioCtx.destination);
 }
 
-let loadSoundFile = (filePath) => {
+let loadSoundFile = (filePath: string) => {
     element.src = filePath;
 }
 
@@ -79,7 +80,7 @@ let pauseCurrentSound = () => {
     playing = false;
 }
 
-let setVolume = (value) => {
+let setVolume = (value: number | string) => {
     value = Number(value); // make sure that it's a Number rather than a String
     gainNode.gain.value = value;
 }
